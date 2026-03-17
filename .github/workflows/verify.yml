@@ -23,4 +23,4 @@ jobs:
         run: clawhub install verified-agent-identity
 
       - name: Run Verification
-        run: clawhub run verified-agent-identity
+        run: clawhub run

@@ -1,4 +1,4 @@
-name: Verify Human Identity
+name: Simple Verify
 
 on:
   workflow_dispatch:
@@ -8,15 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      - name: Run verification
-        run: |
-          npx clawhub@latest install verified-agent-identity
-          npx clawhub@latest run
+      - name: Show identity file
+        run: cat bayusatria17.json

@@ -16,9 +16,6 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
-        run: npm install
-
       - name: Run verification
         run: |
           npx clawhub@latest install verified-agent-identity

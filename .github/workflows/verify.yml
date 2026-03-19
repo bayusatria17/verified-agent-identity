@@ -1,15 +1,34 @@
-name: Simple Verify
+name: Verify Human Identity
 
 on:
   workflow_dispatch:
+    inputs:
+      agent_name:
+        description: 'Your agent name'
+        required: true
+        default: 'bayy07'
+      agent_description:
+        description: 'Your agent description'
+        required: true
+        default: 'Bayy AI Agent'
 
 jobs:
   verify:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Show identity file
-        run: cat bayusatria17.json
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install ClawHub
+        run: npm install -g clawhub
+
+      - name: Show Agent Info
+        run: |
+          echo "Agent Name: ${{ github.event.inputs.agent_name }}"
+          echo "Description: ${{ github.event.inputs.agent_description }}"

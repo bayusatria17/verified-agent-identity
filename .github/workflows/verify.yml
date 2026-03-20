@@ -13,21 +13,19 @@ jobs:
 
       - name: Check Identity File
         run: |
-          echo "Checking identity file..."
           if [ -f "bayusatria17.txt" ]; then
-            echo "Identity file found ✅"
+            echo "Identity file found"
           else
-            echo "Identity file NOT found ❌"
+            echo "Identity file NOT found"
             exit 1
           fi
 
       - name: Show File Content
         run: |
-          echo "Your identity:"
           cat bayusatria17.txt
 
       - name: Link Human to Agent
         run: |
-          echo "✅ Verification Success"
-          echo "👉 Copy this link and open in browser:"
-          echo "https://billions.network/verify?user=bayusatria17
+          echo Verification Success
+          echo Open this link:
+          echo https://billions.network/verify?user=bayusatria17

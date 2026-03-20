@@ -2,33 +2,32 @@ name: Verify Human Identity
 
 on:
   workflow_dispatch:
-    inputs:
-      agent_name:
-        description: 'Your agent name'
-        required: true
-        default: 'bayy07'
-      agent_description:
-        description: 'Your agent description'
-        required: true
-        default: 'Bayy AI Agent'
 
 jobs:
   verify:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      - name: Install ClawHub
-        run: npm install -g clawhub
-
-      - name: Show Agent Info
+      - name: Check Identity File
         run: |
-          echo "Agent Name: ${{ github.event.inputs.agent_name }}"
-          echo "Description: ${{ github.event.inputs.agent_description }}"
+          echo "Checking identity file..."
+          if [ -f "bayusatria17.txt" ]; then
+            echo "Identity file found ✅"
+          else
+            echo "Identity file NOT found ❌"
+            exit 1
+          fi
+
+      - name: Show File Content
+        run: |
+          echo "Your identity:"
+          cat bayusatria17.txt
+
+      - name: Link Human to Agent
+        run: |
+          echo "✅ Verification Success"
+          echo "👉 Copy this link and open in browser:"
+          echo "https://billions.network/verify?user=bayusatria17

@@ -2,30 +2,40 @@ name: Verify Human Identity
 
 on:
   workflow_dispatch:
+    inputs:
+      agent_name:
+        description: 'Agent name'
+        required: true
+        default: 'bayusatria17'
+      agent_description:
+        description: 'Agent description'
+        required: true
+        default: 'bayusatria17 AI Agent'
 
 jobs:
   verify:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - name: Check Identity File
-        run: |
-          if [ -f "bayusatria17.txt" ]; then
-            echo "Identity file found"
-          else
-            echo "Identity file NOT found"
-            exit 1
-          fi
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
-      - name: Show File Content
+      - name: Install ClawHub skill
+        run: npx clawhub@latest install verified-agent-identity
+
+      - name: Install dependencies
         run: |
-          cat bayusatria17.txt
+          cd scripts
+          npm install
+
+      - name: Create Ethereum Identity
+        run: node scripts/createNewEthereumIdentity.js
 
       - name: Link Human to Agent
         run: |
-          echo Verification Success
-          echo Open this link:
-          echo https://billions.network/verify?user=bayusatria17
+          node scripts/manualLinkHumanToAgent.js --challenge "{\"name\":\"bayusatria17\",\"description\":\"bayusatria17 AI Agent\"}"
